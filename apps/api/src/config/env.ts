@@ -12,6 +12,8 @@ const envSchema = z.object({
 
   REDIS_URL: z.string().optional(),
 
+  TAVILY_API_KEY: z.string().optional(),
+
   LLM_API_KEY: z.string().optional(),
 
   SEARCH_API_KEY: z.string().optional(),

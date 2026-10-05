@@ -1,9 +1,1 @@
-export type SearchSource = {
-  title: string;
-  url: string;
-};
-
-export type SearchResult = {
-  query: string;
-  sources: SearchSource[];
-};
+export type { SearchResult } from "./search.js";

@@ -4,6 +4,7 @@ import {pinoHttp} from "pino-http";
 import { checkDatabaseConnection } from "./infrastructure/db/health.js";
 import { checkRedisConnection } from "./infrastructure/redis/health.js";
 import { errroHandler } from "./middleware/error-handler.js";
+import searchRouter from "./search/search.routes.js";
 import { logger } from "./config/logger.js";
 
 const app = express();
@@ -40,6 +41,8 @@ app.get("/health", async (_req, res) => {
 app.get("/test-error", (_req, _res) => {
   throw new Error("This is a test error");
 });
+
+app.use("/api/search", searchRouter);
 
 // Global error handler — must be after routes
 app.use(errroHandler);

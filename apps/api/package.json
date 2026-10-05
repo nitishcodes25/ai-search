@@ -1,12 +1,14 @@
 {
-  "name": "api",
+  "name": "@ai-search/api",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "dev": "tsx --watch src/server.ts",
     "build": "tsc",
-    "start": "node dist/server.js"
+    "start": "node dist/server.js",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "keywords": [],
   "author": "",
@@ -19,7 +21,8 @@
     "pino": "^10.4.0",
     "pino-http": "^11.0.0",
     "redis": "^6.3.0",
-    "zod": "^4.6.5"
+    "zod": "^4.6.5",
+    "@ai-search/shared": "workspace:*"
   },
   "devDependencies": {
     "@types/express": "^5.0.6",
