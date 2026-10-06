@@ -1,6 +1,7 @@
 import type {Request, Response} from 'express'
 import { SearchService } from './search.service.js';
 import { searchQuerySchema } from './search.schema.js';
+import { mapSearchResults } from './search-result.mapper.js';
 
 export class SearchController {
     constructor(private readonly searchService: SearchService) {}
@@ -11,7 +12,7 @@ export class SearchController {
         const results = await this.searchService.search(q)
 
         res.json({
-            results
+            results: mapSearchResults(results)
         })
     }
 }

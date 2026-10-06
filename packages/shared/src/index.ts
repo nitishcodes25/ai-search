@@ -1,1 +1,1 @@
-export type { SearchResult } from "./search.js";
+export * from "./search.js";

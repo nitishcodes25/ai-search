@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 
 import { searchWeb} from "../api/search";
-import type {SearchResult} from '@ai-search/shared'
+import type {SearchResultResponse} from '@ai-search/shared'
 
 function Search() {
   const [hasSearched, setHasSearched] = useState(false);
   const [query, setQuery] = useState("");
-  const [results, setResults] = useState<SearchResult[]>([]);
+  const [results, setResults] = useState<SearchResultResponse[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -63,7 +63,7 @@ function Search() {
 
       <div>
         {results.map((result) => (
-          <article key={result.url}>
+          <article key={result.id}>
             <h2>
               <a href={result.url} target="_blank" rel="noreferrer">
                 {result.title}

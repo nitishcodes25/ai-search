@@ -37,6 +37,7 @@ export class TavilySearchProvider implements SearchProvider {
 
     return data.results.map(
       (result): SearchResult => ({
+        id: result.url,
         title: result.title,
         url: result.url,
         snippet: result.content,
