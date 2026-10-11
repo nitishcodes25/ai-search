@@ -1,8 +1,4 @@
-import { FetchedPage } from "@ai-search/shared";
-
-const TITLE_WEIGHT = 0.5;
-const SNIPPET_WEIGHT = 0.3;
-const CONTENT_WEIGHT = 0.2;
+import { FetchedPage, RelevanceScore } from "@ai-search/shared";
 
 const tokenize = (query: string): string[] => {
   return query
@@ -31,14 +27,16 @@ const matchScore = (query: string, text: string) => {
   return match / tokenizedQuery.length;
 };
 
-export const scoreResult = (query: string, fetchedPage: FetchedPage): number => {
-  const { result, extractedContent } = fetchedPage;
-  const { title, snippet } = result;
-  const { text } = extractedContent;
+export const scoreResult = (query: string, fetchedPage: FetchedPage): RelevanceScore => {
+  const { title, snippet, textContent } = fetchedPage;
 
-  return (
-    matchScore(query, title) * TITLE_WEIGHT +
-    matchScore(query, snippet) * SNIPPET_WEIGHT +
-    matchScore(query, text) * CONTENT_WEIGHT
-  );
+  const titleScore = matchScore(query, title ?? "");
+  const snippetScore = matchScore(query, snippet);
+  const textContentScore =  matchScore(query, textContent ?? "");
+ 
+  return {
+    titleScore,
+    snippetScore,
+    textContentScore
+  }
 };

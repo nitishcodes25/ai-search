@@ -1,3 +1,4 @@
+import { randomUUID } from "node:crypto";
 import { env } from "../../config/env.js";
 import type {SearchResult} from '@ai-search/shared'
 import { SearchProvider } from "./search-provider.js";
@@ -37,11 +38,10 @@ export class TavilySearchProvider implements SearchProvider {
 
     return data.results.map(
       (result): SearchResult => ({
-        id: result.url,
+        id: randomUUID(),
         title: result.title,
         url: result.url,
         snippet: result.content,
-        source: new URL(result.url).hostname,
       }),
     );
   }

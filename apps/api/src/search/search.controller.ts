@@ -12,7 +12,7 @@ export class SearchController {
         const results = await this.searchService.search(q)
 
         res.json({
-            results: mapSearchResults(results)
+            data: mapSearchResults(results)
         })
     }
 }

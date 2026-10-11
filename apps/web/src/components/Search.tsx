@@ -72,7 +72,6 @@ function Search() {
 
             <p>{result.snippet}</p>
 
-            <small>{result.source}</small>
           </article>
         ))}
       </div>

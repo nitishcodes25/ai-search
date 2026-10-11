@@ -3,26 +3,41 @@ export type SearchResult = {
   title: string;
   url: string;
   snippet: string;
-  source: string;
-};
-
-export type FetchedPage = {
-  result: SearchResult;
-  html: string;
-  extractedContent: ExtractedContent;
 };
 
 export type ExtractedContent = {
   title: string | null;
-  content: string;
-  text: string;
+  content: string | null;
+  textContent: string | null;
+  length: number | null;
+  excerpt: string | null;
+  byline: string | null;
+  dir: string | null;
+  siteName: string | null;
+  lang: string | null;
+  publishedTime: string | null;
 };
 
-export type ScoredPage = {
-  page: FetchedPage;
+export type FetchedPage = ExtractedContent & {
+  id: string;
+  url: string;
+  snippet: string;
+};
+
+export type RelevanceScore = {
+  titleScore: number;
+  snippetScore: number;
+  textContentScore: number;
+};
+
+export type ScoredPage = FetchedPage & {
   score: number;
 };
 
 export type SearchResultResponse = SearchResult & {
-  score: number
-}
+  excerpt: string | null;
+  lang: string | null;
+  dir: string | null;
+  publishedTime: string | null;
+  score: number;
+};

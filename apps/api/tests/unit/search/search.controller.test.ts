@@ -1,7 +1,10 @@
 import { describe, it, expect, vi, type Mock, beforeEach } from "vitest";
 import { SearchController } from "../../../src/search/search.controller.js";
 import type { SearchService } from "../../../src/search/search.service.js";
-import type { SearchResult } from "@ai-search/shared/dist/search.js";
+import type {
+  ScoredPage,
+  SearchResultResponse,
+} from "@ai-search/shared/dist/search.js";
 import type { Request, Response } from "express";
 
 describe("SearchController", () => {
@@ -9,9 +12,9 @@ describe("SearchController", () => {
   let controller: SearchController;
   let req: Request;
   let res: Response;
-  
+
   beforeEach(() => {
-    searchMock = vi.fn<(query: string) => Promise<SearchResult[]>>();
+    searchMock = vi.fn<(query: string) => Promise<ScoredPage[]>>();
     req = {
       query: {
         q: "",
@@ -27,16 +30,32 @@ describe("SearchController", () => {
   });
 
   it("test valid query gives valid result", async () => {
-    const testResult: SearchResult[] = [
+    const testResult: SearchResultResponse[] = [
       {
+        id: "abc",
         title: "React 19 features",
         url: "https://reactjs.org/blog/2024/01/01/react-19-features.html",
         snippet: "React 19 introduces several new features and improvements...",
-        source: "reactjs.org",
+        excerpt: "React 19",
+        dir: "ltr",
+        lang: "en",
+        publishedTime: '03-09-2026',
+        score: 0.85,
       },
     ];
 
-    searchMock.mockResolvedValue(testResult);
+    const scorePageResult: ScoredPage[] = [
+      {
+        ...testResult[0],
+        content: "<article>React 19</article>",
+        textContent: "React 19",
+        length: 8,
+        siteName: "reactjs.org",
+        byline: "Nitish",
+      },
+    ];
+
+    searchMock.mockResolvedValue(scorePageResult);
 
     req.query.q = "react 19 features";
 
@@ -44,7 +63,7 @@ describe("SearchController", () => {
 
     expect(searchMock).toHaveBeenCalledWith("react 19 features");
     expect(res.json).toHaveBeenCalledWith({
-      results: testResult,
+      data: testResult,
     });
   });
 
